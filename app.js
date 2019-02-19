@@ -10,60 +10,74 @@ const items = {
   helmet: new Item("Casque", 10, 0, 2)
 };
 
-const players = [
-  new Player(
-    "Alex",
-    "photo",
-    {
-      healthPoints: 40,
-      attackPoints: 5,
-      defensePoints: 5
-    },
-    items
-  ),
-  new Player(
-    "Mael",
-    "photo",
-    {
-      healthPoints: 40,
-      attackPoints: 5,
-      defensePoints: 5
-    },
-    items
-  ),
-  new Player(
-    "Teddy",
-    "photo",
-    {
-      healthPoints: 40,
-      attackPoints: 5,
-      defensePoints: 5
-    },
-    items
-  ),
-  new Player(
-    "Clement",
-    "photo",
-    {
-      healthPoints: 40,
-      attackPoints: 5,
-      defensePoints: 5
-    },
-    items
-  )
-];
+const basePlayerStats = {
+  attackPoints: 20,
+  healthPoints: 0,
+  defensePoints: 0
+};
 
-const david = new Monster(
-  "David le portos",
-  "une image",
-  {
-    healthPoints: 500,
-    attackPoints: 30,
-    defensePoints: 5
-  },
-  {}
-);
+const baseMonsterStats = {
+  attackPoints: 30,
+  healthPoints: 70,
+  defensePoints: 10
+};
 
-const battle = new Battle("field", players, david);
+const player = new Player("Joueur 1", "image", basePlayerStats, items);
 
-battle.fight();
+const david = new Monster("David", "image", baseMonsterStats, {});
+
+const updatePos = position => {
+  player.position(position);
+};
+
+const fight = () => {
+  const battle = new Battle("field", [player], david);
+
+  battle.fight();
+};
+
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  const crd = pos.coords;
+  player.position = crd;
+  console.log("Votre position actuelle est :");
+  console.log(`Latitude : ${player.position.latitude}`);
+  console.log(`Longitude : ${player.position.longitude}`);
+  console.log(`La précision est de ${player.position.accuracy} mètres.`);
+}
+
+function error(err) {
+  console.warn(`ERREUR (${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+const playerNameElement = document.getElementById("playerName");
+const playerStatsElement = document.getElementById("playerStats");
+const monsterNameElement = document.getElementById("monsterName");
+const monsterStatsElement = document.getElementById("monsterStats");
+const fightButton = document.getElementById("fightButton");
+
+playerNameElement.innerHTML = player.name;
+Object.keys(player.stats).map(key => {
+  const listElement = document.createElement("li");
+  listElement.appendChild(
+    document.createTextNode(`${key}: ${player.stats[key]}`)
+  );
+  playerStatsElement.appendChild(listElement);
+});
+monsterNameElement.innerHTML = david.name;
+Object.keys(david.stats).map(key => {
+  const listElement = document.createElement("li");
+  listElement.appendChild(
+    document.createTextNode(`${key}: ${david.stats[key]}`)
+  );
+  monsterStatsElement.appendChild(listElement);
+});
+
+fightButton.addEventListener("click", fight);

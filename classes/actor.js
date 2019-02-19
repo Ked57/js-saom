@@ -5,6 +5,7 @@ export default class Actor {
     this.statsBase = stats;
     this.itemList = itemList;
     this.stats = this.calculateStats(stats, itemList);
+    this.position = undefined;
   }
 
   fight(actor) {
@@ -33,5 +34,9 @@ export default class Actor {
       stats.defensePoints += itemList[key].defensePoints;
     });
     return stats;
+  }
+
+  setPosition(position) {
+    this.position = position;
   }
 }

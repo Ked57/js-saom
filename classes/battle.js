@@ -1,39 +1,30 @@
-import getRandomInt from "../utils/utils.js";
+import showResult from "../utils/utils.js";
 
 export default class Battle {
   constructor(field, players, monster) {
     this.field = field;
     this.players = players;
     this.monster = monster;
-    this.isGameOver = false;
   }
 
   fight() {
-    do {
-      console.log("On commence un tour");
-      this.turn();
-    } while (!this.isGameOver);
+    if (
+      this.monster.stats.healthPoints + this.monster.stats.defensePoints * 2 <=
+      this.getCumulatedPlayersAttackPoints()
+    ) {
+      showResult(`Vous gagnez le combat contre ${this.monster.name} !`);
+      return true;
+    } else {
+      showResult(`Vous perdez le combat contre ${this.monster.name} !`);
+      return false;
+    }
   }
 
-  turn() {
-    this.players.map(player => {
-      if (this.isGameOver) {
-        return;
-      }
-      const isEnnemyAlive = player.fight(this.monster);
-      if (!isEnnemyAlive) {
-        this.isGameOver = true;
-      }
+  getCumulatedPlayersAttackPoints() {
+    let cumulatedPlayersAttackPoints = 0;
+    this.players.forEach(player => {
+      cumulatedPlayersAttackPoints += player.stats.attackPoints;
     });
-    if (this.isGameOver) {
-      return;
-    }
-    const player = this.players[getRandomInt(this.players.length)];
-    const isEnnemyAlive = this.monster.fight(player);
-    if (!isEnnemyAlive) {
-      const index = this.players.indexOf(player);
-      this.players.splice(index, 1);
-      this.isGameOver = this.players.length <= 0;
-    }
+    return cumulatedPlayersAttackPoints;
   }
 }

@@ -1,5 +1,6 @@
-const getRandomInt = max => {
-  return Math.floor(Math.random() * Math.floor(max));
+const showResult = text => {
+  const fightResult = document.getElementById("fightResult");
+  fightResult.innerHTML = text;
 };
 
-export default getRandomInt;
+export default showResult;
