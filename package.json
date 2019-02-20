@@ -1,0 +1,25 @@
+{
+  "name": "js-saom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ked57/js-saom.git"
+  },
+  "author": "Clément Fassot <Clément Fassot> (https://twitter.com/fassotC)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ked57/js-saom/issues"
+  },
+  "homepage": "https://github.com/Ked57/js-saom#readme",
+  "devDependencies": {
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  }
+}
