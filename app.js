@@ -7,6 +7,8 @@ import configFirebase from "./config";
 
 const db = firebase.initializeApp(configFirebase).firestore();
 
+const playerCollection = db.collection("player");
+
 const items = {
   sword: new Item("Epée", 0, 10, 1),
   chest: new Item("Plastron", 20, 0, 3),
@@ -26,7 +28,58 @@ const baseMonsterStats = {
   defensePoints: 10
 };
 
-const player = db;
+let player;
+
+const initPage = querySnapshot => {
+  if (querySnapshot.size > 1) {
+    console.error("CA MARCHE PAS Y'A TROP DE GENS");
+    return;
+  }
+
+  const playerDoc = querySnapshot.docs.pop();
+  const playerData = playerDoc.data();
+
+  const items = Object.keys(playerData.items).map(
+    key =>
+      new Item(
+        playerData.items[key].name,
+        playerData.items[key].healthPoints,
+        playerData.items[key].attackPoints,
+        playerData.items[key].defensePoints
+      )
+  );
+  player = new Player(playerData.name, "photo", playerData.stats, items);
+
+  const playerNameElement = document.getElementById("playerName");
+  const playerStatsElement = document.getElementById("playerStats");
+  const monsterNameElement = document.getElementById("monsterName");
+  const monsterStatsElement = document.getElementById("monsterStats");
+  const fightButton = document.getElementById("fightButton");
+
+  playerNameElement.innerHTML = player.name;
+  Object.keys(player.stats).map(key => {
+    const listElement = document.createElement("li");
+    listElement.appendChild(
+      document.createTextNode(`${key}: ${player.stats[key]}`)
+    );
+    playerStatsElement.appendChild(listElement);
+  });
+  monsterNameElement.innerHTML = david.name;
+  Object.keys(david.stats).map(key => {
+    const listElement = document.createElement("li");
+    listElement.appendChild(
+      document.createTextNode(`${key}: ${david.stats[key]}`)
+    );
+    monsterStatsElement.appendChild(listElement);
+  });
+
+  fightButton.addEventListener("click", fight);
+};
+
+playerCollection
+  .where("name", "==", "player")
+  .get()
+  .then(initPage);
 
 const david = new Monster("David", "image", baseMonsterStats, {});
 
@@ -60,28 +113,3 @@ function error(err) {
 }
 
 navigator.geolocation.getCurrentPosition(success, error, options);
-
-const playerNameElement = document.getElementById("playerName");
-const playerStatsElement = document.getElementById("playerStats");
-const monsterNameElement = document.getElementById("monsterName");
-const monsterStatsElement = document.getElementById("monsterStats");
-const fightButton = document.getElementById("fightButton");
-
-playerNameElement.innerHTML = player.name;
-Object.keys(player.stats).map(key => {
-  const listElement = document.createElement("li");
-  listElement.appendChild(
-    document.createTextNode(`${key}: ${player.stats[key]}`)
-  );
-  playerStatsElement.appendChild(listElement);
-});
-monsterNameElement.innerHTML = david.name;
-Object.keys(david.stats).map(key => {
-  const listElement = document.createElement("li");
-  listElement.appendChild(
-    document.createTextNode(`${key}: ${david.stats[key]}`)
-  );
-  monsterStatsElement.appendChild(listElement);
-});
-
-fightButton.addEventListener("click", fight);
