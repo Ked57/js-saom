@@ -2,18 +2,10 @@ import Player from "./classes/player.js";
 import Monster from "./classes/monster.js";
 import Battle from "./classes/battle.js";
 import Item from "./classes/item.js";
-// import firebase from "./node_modules/firebase";
+import firebase from "firebase";
+import configFirebase from "./config";
 
-// const db = firebase.initializeApp({
-//   apiKey: "AIzaSyC6BCgjCW2PRDiMIdV9HhTULmkgbMxVs6U",
-//   authDomain: "saom-88cd9.firebaseapp.com",
-//   databaseURL: "https://saom-88cd9.firebaseio.com",
-//   projectId: "saom-88cd9",
-//   storageBucket: "saom-88cd9.appspot.com",
-//   messagingSenderId: "594008816413"
-// });
-
-// console.log(db.firestore());
+const db = firebase.initializeApp(configFirebase).firestore();
 
 const items = {
   sword: new Item("Epée", 0, 10, 1),
@@ -34,7 +26,7 @@ const baseMonsterStats = {
   defensePoints: 10
 };
 
-const player = new Player("Joueur 1", "image", basePlayerStats, items);
+const player = db;
 
 const david = new Monster("David", "image", baseMonsterStats, {});
 
