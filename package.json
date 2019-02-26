@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production"
+    "build": "babel src -d lib && webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Ked57/js-saom#readme",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },

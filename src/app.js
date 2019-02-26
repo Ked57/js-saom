@@ -3,7 +3,7 @@ import Monster from "./classes/monster.js";
 import Battle from "./classes/battle.js";
 import Item from "./classes/item.js";
 import firebase from "firebase";
-import configFirebase from "./config";
+import configFirebase from "../config";
 
 const db = firebase.initializeApp(configFirebase).firestore();
 
