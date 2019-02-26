@@ -4,6 +4,8 @@ import Battle from "./classes/battle.js";
 import Item from "./classes/item.js";
 import firebase from "firebase";
 import configFirebase from "../config.js";
+import Actor from "./classes/actor.js";
+import ActorStatsComponent from "./components/actor-stats-component.js";
 
 const db = firebase.initializeApp(configFirebase).firestore();
 
@@ -50,31 +52,16 @@ const initPage = querySnapshot => {
   );
   player = new Player(playerData.name, "photo", playerData.stats, items);
 
-  const playerNameElement = document.getElementById("playerName");
-  const playerStatsElement = document.getElementById("playerStats");
-  const monsterNameElement = document.getElementById("monsterName");
-  const monsterStatsElement = document.getElementById("monsterStats");
   const fightButton = document.getElementById("fightButton");
-
-  playerNameElement.innerHTML = player.name;
-  Object.keys(player.stats).map(key => {
-    const listElement = document.createElement("li");
-    listElement.appendChild(
-      document.createTextNode(`${key}: ${player.stats[key]}`)
-    );
-    playerStatsElement.appendChild(listElement);
-  });
-  monsterNameElement.innerHTML = david.name;
-  Object.keys(david.stats).map(key => {
-    const listElement = document.createElement("li");
-    listElement.appendChild(
-      document.createTextNode(`${key}: ${david.stats[key]}`)
-    );
-    monsterStatsElement.appendChild(listElement);
-  });
 
   fightButton.addEventListener("click", fight);
 };
+
+const actor1 = document.createElement("actor-stats-component");
+const actor2 = document.createElement("actor-stats-component");
+const stats = document.getElementById("stats");
+stats.appendChild(actor1);
+stats.appendChild(actor2);
 
 playerCollection
   .where("name", "==", "player")
