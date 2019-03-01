@@ -1,5 +1,3 @@
-import showResult from "../utils/utils.js";
-
 export default class Battle {
   constructor(field, players, monster) {
     this.field = field;
@@ -12,10 +10,10 @@ export default class Battle {
       this.monster.stats.healthPoints + this.monster.stats.defensePoints * 2 <=
       this.getCumulatedPlayersAttackPoints()
     ) {
-      showResult(`Vous gagnez le combat contre ${this.monster.name} !`);
+      //showResult(`Vous gagnez le combat contre ${this.monster.name} !`);
       return true;
     } else {
-      showResult(`Vous perdez le combat contre ${this.monster.name} !`);
+      //showResult(`Vous perdez le combat contre ${this.monster.name} !`);
       return false;
     }
   }
