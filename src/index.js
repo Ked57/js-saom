@@ -6,9 +6,9 @@ import Loading from "./components/Loading/loading";
 import * as serviceWorker from "./serviceWorker";
 import Player from "./classes/player.js";
 import Monster from "./classes/monster.js";
-import Battle from "./classes/battle.js";
+//import Battle from "./classes/battle.js";
 import Item from "./classes/item.js";
-import firebase from "firebase";
+import * as firebase from "firebase";
 import configFirebase from "./config.js";
 
 ReactDOM.render(<Loading />, document.getElementById("root"));
@@ -43,7 +43,7 @@ const initPage = querySnapshot => {
   );
   const player = new Player(playerData.name, "photo", playerData.stats, items);
   const david = new Monster("David", "image", baseMonsterStats, {});
-  const actors = { ...player, ...david };
+  const actors = [player, david];
   ReactDOM.render(<App actors={actors} />, document.getElementById("root"));
 };
 

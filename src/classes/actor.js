@@ -28,7 +28,7 @@ export default class Actor {
   }
 
   calculateStats(stats, itemList) {
-    Object.keys(itemList).map(key => {
+    Object.keys(itemList).forEach(key => {
       stats.healthPoints += itemList[key].healthPoints;
       stats.attackPoints += itemList[key].attackPoints;
       stats.defensePoints += itemList[key].defensePoints;

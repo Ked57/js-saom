@@ -1,25 +1,31 @@
 import React, { Component } from "react";
 import "./ActorStats.css";
+import { Card, CardContent, List, ListItem } from "@material-ui/core";
 
 class ActorStats extends Component {
   createStatLine(name, value) {
     return (
-      <li key={name}>
+      <ListItem key={name}>
         {name} : {value}
-      </li>
+      </ListItem>
     );
   }
+
   render() {
     return (
       <div className="ActorStats">
-        {this.props.type}
-        <p>Name: {this.props.name}</p>
-        <p>Stats: </p>
-        <ul>
-          {Object.keys(this.props.stats).map(key =>
-            this.createStatLine(key, this.props.stats[key])
-          )}
-        </ul>
+        <Card>
+          <CardContent>
+            {this.props.actor.type}
+            <p>Name : {this.props.actor.name}</p>
+            <p>Stats : </p>
+            <List>
+              {Object.keys(this.props.actor.stats).map(key =>
+                this.createStatLine(key, this.props.actor.stats[key])
+              )}
+            </List>
+          </CardContent>
+        </Card>
       </div>
     );
   }
