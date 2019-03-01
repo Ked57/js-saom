@@ -37,7 +37,6 @@ const initPage = querySnapshot => {
     );
     return new Player(playerData.name, "photo", playerData.stats, items);
   });
-  console.log(players);
   const david = new Monster("David", "image", baseMonsterStats, {});
   const actors = [...players, david];
   ReactDOM.render(<App actors={actors} />, document.getElementById("root"));
