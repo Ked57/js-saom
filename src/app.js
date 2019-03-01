@@ -4,8 +4,7 @@ import Battle from "./classes/battle.js";
 import Item from "./classes/item.js";
 import firebase from "firebase";
 import configFirebase from "../config.js";
-import Actor from "./classes/actor.js";
-import ActorStatsComponent from "./components/actor-stats-component.js";
+import postal from "postal";
 
 const db = firebase.initializeApp(configFirebase).firestore();
 
@@ -51,6 +50,12 @@ const initPage = querySnapshot => {
       )
   );
   player = new Player(playerData.name, "photo", playerData.stats, items);
+  console.log("publish");
+  postal.publish({
+    channel: "players",
+    topic: "init",
+    data: player
+  });
 
   const fightButton = document.getElementById("fightButton");
 

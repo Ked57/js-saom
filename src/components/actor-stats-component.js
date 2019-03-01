@@ -1,3 +1,5 @@
+import postal from "postal";
+
 export default class ActorStatsComponent extends HTMLElement {
   constructor() {
     super();
@@ -8,9 +10,19 @@ export default class ActorStatsComponent extends HTMLElement {
     this.content.appendChild(this.actorNameElement);
     this.content.appendChild(document.createTextNode("Stats"));
     this.content.appendChild(this.actorStatsElement);
+
+    postal.subscribe({
+      channel: "players",
+      topic: "init",
+      callback: data => {
+        console.log("callback");
+        this.renderActorData(data);
+      }
+    });
   }
 
   renderActorData(actor) {
+    console.log("yo");
     this.actorNameElement.innerHTML = actor.name;
     Object.keys(actor.stats).map(key => {
       const listElement = document.createElement("li");
@@ -21,4 +33,5 @@ export default class ActorStatsComponent extends HTMLElement {
     });
   }
 }
+
 window.customElements.define("actor-stats-component", ActorStatsComponent);
