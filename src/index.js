@@ -2,9 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/App/App";
+import Loading from "./components/Loading/loading";
 import * as serviceWorker from "./serviceWorker";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const loaded = false;
+
+if (!loaded) {
+  ReactDOM.render(<Loading />, document.getElementById("root"));
+} else {
+  ReactDOM.render(<App />, document.getElementById("root"));
+}
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
